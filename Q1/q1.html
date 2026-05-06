@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f5f5f5;
+    }
+
+    .container {
+        background: white;
+        padding: 30px;
+        width: 320px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 8px;
+        margin-bottom: 5px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    input:focus {
+        border-color: #333;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 15px;
+        background: #333;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #555;
+    }
+
+    .error {
+        color: #e74c3c;
+        font-size: 12px;
+        height: 14px;
+    }
+
+    .success {
+        color: green;
+        text-align: center;
+        margin-top: 10px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Register</h2>
+
+    <form id="regForm">
+        <input type="text" id="name" placeholder="Full Name">
+        <div id="nameError" class="error"></div>
+
+        <input type="text" id="email" placeholder="Email">
+        <div id="emailError" class="error"></div>
+
+        <input type="password" id="password" placeholder="Password">
+        <div id="passError" class="error"></div>
+
+        <input type="password" id="confirmPassword" placeholder="Confirm Password">
+        <div id="confirmError" class="error"></div>
+
+        <button type="submit">Create Account</button>
+        <div id="successMsg" class="success"></div>
+    </form>
+</div>
+
+<script>
+const form = document.getElementById("regForm");
+const name = document.getElementById("name");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+const confirmPassword = document.getElementById("confirmPassword");
+
+const nameError = document.getElementById("nameError");
+const emailError = document.getElementById("emailError");
+const passError = document.getElementById("passError");
+const confirmError = document.getElementById("confirmError");
+const successMsg = document.getElementById("successMsg");
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    nameError.textContent = "";
+    emailError.textContent = "";
+    passError.textContent = "";
+    confirmError.textContent = "";
+    successMsg.textContent = "";
+
+    let valid = true;
+
+    if (name.value.trim() === "") {
+        nameError.textContent = "Name required";
+        valid = false;
+    }
+
+    const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if (!email.value.match(emailPattern)) {
+        emailError.textContent = "Invalid email";
+        valid = false;
+    }
+
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+    if (!password.value.match(passwordPattern)) {
+        passError.textContent = "Min 8 chars, upper, lower, number & symbol";
+        valid = false;
+    }
+
+    if (password.value !== confirmPassword.value) {
+        confirmError.textContent = "Passwords do not match";
+        valid = false;
+    }
+
+    if (valid) {
+        successMsg.textContent = "Registration Successful!";
+        form.reset();
+    }
+});
+</script>
+
+</body>
+</html>
